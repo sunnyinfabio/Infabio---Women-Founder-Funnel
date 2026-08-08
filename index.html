@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infabio | Growth Diagnostic</title>
+    <meta name="description" content="Calculate your growth score and discover where your brand is losing momentum.">
+    <link rel="icon" href="https://www.infabio.com/infabio-logo-dark.webp">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+
+    <!-- GSAP for Animations -->
+
+    <!-- Strategy Call Modal -->
+    <div class="modal-overlay" id="strategy-modal" onclick="if(event.target === this) closeModal()">
+        <div class="modal-container">
+            <div class="modal-grid">
+                <!-- Left Pane -->
+                <div class="modal-pane">
+                    <div class="pill-badge"
+                        style="border-radius: 100px; padding: 0.25rem 1rem; border-color: rgba(255,255,255,0.1); color: #ff8a9d; margin-bottom: 2rem; font-weight: 600; display: inline-block;">
+                        TALK TO US</div>
+                    <h2
+                        style="font-family: var(--font-display); font-size: 3rem; margin-bottom: 2rem; line-height: 1.1;">
+                        A focused first <br>conversation.</h2>
+                    <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.8;">No generic pitch. We'll talk
+                        through your goals, current marketing, and where budget is being lost or underused.</p>
+
+                    <ul class="contact-list">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                </path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            hello@infabio.com
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                </path>
+                            </svg>
+                            Free strategy consultation
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            Gurugram & Jaipur, India
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right Pane -->
+                <div class="modal-pane">
+                    <button class="modal-close interactive" onclick="closeModal()">×</button>
+                    <form onsubmit="event.preventDefault(); alert('Request sent!'); closeModal();" class="form-grid">
+                        <div class="form-group">
+                            <label>NAME *</label>
+                            <input type="text" class="form-input interactive" required>
+                        </div>
+                        <div class="form-group">
+                            <label>WORK EMAIL *</label>
+                            <input type="email" class="form-input interactive" required>
+                        </div>
+                        <div class="form-group">
+                            <label>PHONE</label>
+                            <input type="tel" class="form-input interactive">
+                        </div>
+                        <div class="form-group">
+                            <label>COMPANY</label>
+                            <input type="text" class="form-input interactive">
+                        </div>
+                        <div class="form-group full">
+                            <label>MONTHLY MARKETING BUDGET *</label>
+                            <select class="form-input interactive" required
+                                style="appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1.5rem top 50%; background-size: 0.65rem auto;">
+                                <option value="" disabled selected>Select a range</option>
+                                <option value="under5k">Under $5,000</option>
+                                <option value="5k-20k">$5,000 - $20,000</option>
+                                <option value="20k-100k">$20,000 - $100,000</option>
+                                <option value="100k+">$100,000+</option>
+                            </select>
+                        </div>
+                        <div class="form-group full">
+                            <label>WHAT WOULD YOU LIKE TO IMPROVE? *</label>
+                            <textarea class="form-input interactive" rows="4" required
+                                style="resize: vertical;"></textarea>
+                        </div>
+                        <div class="form-group full">
+                            <button type="submit" class="form-btn interactive">BOOK FREE STRATEGY CALL →</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Tailwind for exact footer -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            corePlugins: { preflight: false }
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Background Effects -->
+    <canvas id="bg-canvas"></canvas>
+    <div class="lightning-overlay"></div>
+
+    <nav>
+        <div class="container nav-content">
+            <a href="#" class="interactive">
+                <img src="https://www.infabio.com/infabio-logo-dark.webp" alt="Infabio Logo" style="height: 96px;">
+            </a>
+            <div style="display: flex; gap: 2rem; align-items: center;">
+                <a href="#" class="interactive"
+                    style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.3s;"
+                    onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">About
+                    Us</a>
+                <a href="#" class="interactive"
+                    style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.3s;"
+                    onmouseover="this.style.color='white'"
+                    onmouseout="this.style.color='rgba(255,255,255,0.7)'">Services</a>
+                <a href="#" class="interactive"
+                    style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.3s;"
+                    onmouseover="this.style.color='white'"
+                    onmouseout="this.style.color='rgba(255,255,255,0.7)'">Insights</a>
+                <button class="btn btn-outline interactive" style="padding: 0.75rem 1.5rem; font-size: 0.875rem;"
+                    onclick="openModal()">Let's Talk</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content gs-fade">
+                <div class="pill-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    World's First All Women-Powered Growth Agency
+                </div>
+
+                <h1>How strong is your <br><span class="text-gradient">growth engine?</span></h1>
+                <p>Answer 7 quick questions and discover where your brand is losing momentum — and what to fix next.</p>
+
+                <div style="display: flex; gap: 2rem; align-items: center; margin-top: 3rem;">
+                    <button class="btn btn-primary interactive">Calculate My Growth Score</button>
+                    <span style="font-size: 0.875rem; color: var(--text-muted);">2 minutes · Free · No credit
+                        card</span>
+                </div>
+
+                <div class="diagnostic-status">
+                    <div class="status-pill interactive">
+                        <span>Acquisition</span>
+                        <span class="status-active">ACTIVE</span>
+                    </div>
+                    <div class="status-pill interactive">
+                        <span>Conversion</span>
+                        <span class="status-scanning">SCANNING</span>
+                    </div>
+                    <div class="status-pill interactive">
+                        <span>Brand Authority</span>
+                        <span class="status-active">ACTIVE</span>
+                    </div>
+                    <div class="status-pill interactive">
+                        <span>Retention</span>
+                        <span class="status-scanning">SCANNING</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Grid Section -->
+    <section class="stats-showcase">
+        <div class="container gs-fade">
+            <div class="stats-grid-2x2">
+                <div class="stat-card">
+                    <div class="stat-large">50+</div>
+                    <h2>Brands scaled successfully across the globe.</h2>
+                    <p>We build predictable pipeline growth systems.</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-large">40%</div>
+                    <h2>Ad waste reduced through smart AI routing.</h2>
+                    <p>Protecting capital while maximizing commercial pipelines.</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-large">12.0x</div>
+                    <h2>Average ROAS delivered for our partners.</h2>
+                    <p>Outperform bigger budgets with better strategy.</p>
+                </div>
+
+                <div class="stat-card">
+                    <h2 style="font-size: clamp(2rem, 3.5vw, 3.5rem); margin-bottom: 1.5rem; margin-top: 1rem;">Most
+                        agencies spend your money. <br><span class="text-gradient">We protect it.</span></h2>
+                    <p>Lower unnecessary spending. Improve customer acquisition. Generate sustainable growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="diagnostic-section" id="diagnostic">
+        <div class="container">
+            <div class="glass-box gs-fade" id="quiz-container">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="gs-fade" style="margin-bottom: 4rem;">
+                <div class="pill-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    Why Women-Powered, Open for All
+                </div>
+                <h2 style="max-width: 900px; line-height: 1.2;">We hire skills and don't differentiate basis gender,
+                    age, or background — but our motto is <span class="text-gradient">GO - Women.</span></h2>
+                <p style="max-width: 600px; font-size: 1.25rem;">The same mindset that manages homes, budgets, and
+                    families with efficiency — now powers your business growth.</p>
+            </div>
+
+            <div class="marquee-wrapper">
+                <div class="marquee-track interactive">
+                    <!-- Original Set -->
+                    <div class="feature-card">
+                        <h3>Grow Confidently</h3>
+                        <p>Data-backed campaigns. Less guesswork. Capture and retain organic market attention.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Scale Sustainably</h3>
+                        <p>Build systems that compound. Self-funding client acquisition cycles.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Build Authority</h3>
+                        <p>Become the brand people remember through high-end narrative design.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Compete Smarter</h3>
+                        <p>Outperform bigger budgets with micro-targeted, high-efficiency digital funnel infrastructure.
+                        </p>
+                    </div>
+
+                    <!-- Duplicated Set for Infinite Scroll -->
+                    <div class="feature-card">
+                        <h3>Grow Confidently</h3>
+                        <p>Data-backed campaigns. Less guesswork. Capture and retain organic market attention.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Scale Sustainably</h3>
+                        <p>Build systems that compound. Self-funding client acquisition cycles.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Build Authority</h3>
+                        <p>Become the brand people remember through high-end narrative design.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Compete Smarter</h3>
+                        <p>Outperform bigger budgets with micro-targeted, high-efficiency digital funnel infrastructure.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet The Team Section -->
+
+    <section class="founder-data-section">
+        <div class="container">
+            <div class="text-center gs-fade" style="max-width: 800px; margin: 0 auto;">
+                <div class="pill-badge" style="margin: 0 auto 2rem;">THE ADVANTAGE</div>
+                <h2 style="font-size: 3rem; margin-bottom: 1.5rem;">Why <span class="text-gradient">Women
+                        Founders</span> Win.</h2>
+                <p style="font-size: 1.25rem; color: var(--text-muted);">The data is clear. Women-led businesses are
+                    inherently more capital-efficient. When paired with our defense-first marketing systems, the scaling
+                    potential is unmatched.</p>
+            </div>
+
+            <div class="data-3d-grid">
+                <!-- Card 1 -->
+                <div class="card-3d-wrapper interactive tilt-card gs-fade">
+                    <div class="card-3d">
+                        <h3>10%</h3>
+                        <h4>Higher Cumulative Revenue</h4>
+                        <p>Startups founded and co-founded by women generate significantly more revenue over a 5-year
+                            period compared to male-only founded startups.</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card-3d-wrapper interactive tilt-card gs-fade" style="transition-delay: 0.1s;">
+                    <div class="card-3d">
+                        <h3>2x</h3>
+                        <h4>Financial Return on Investment</h4>
+                        <p>For every dollar of funding, women-founded startups generate 78 cents, while male-founded
+                            startups generate only 31 cents. Your capital simply works harder.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card-3d-wrapper interactive tilt-card gs-fade" style="transition-delay: 0.2s;">
+                    <div class="card-3d">
+                        <h3>35%</h3>
+                        <h4>Higher ROI for Investors</h4>
+                        <p>When venture-backed, women-led tech companies achieve 35% higher return on investment.
+                            Imagine applying that same efficiency to your digital ad spend.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="team-section">
+        <div class="container gs-fade">
+            <div class="team-header">
+                <div>
+                    <h2>Meet The <span class="text-gradient">Team</span></h2>
+                    <p style="font-size: 1.25rem;">Women who makes it happen at Infabio</p>
+                </div>
+                <div
+                    style="color: var(--text-muted); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 2px;">
+                    → Scroll to meet them
+                </div>
+            </div>
+        </div>
+
+        <div class="team-track interactive">
+
+            <div class="team-card">
+                <img src="https://www.infabio.com/team/Neha-Sharma.webp" alt="Neha Sharma" />
+                <div class="team-info">
+                    <h3>Neha Sharma</h3>
+                    <p>Director - Business Growth</p>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <img src="https://www.infabio.com/team/Mounica.webp" alt="Monika" />
+                <div class="team-info">
+                    <h3>Monika</h3>
+                    <p>Talent Executive</p>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <img src="https://www.infabio.com/team/chhavi.webp" alt="Chhavi" />
+                <div class="team-info">
+                    <h3>Chhavi</h3>
+                    <p>Founder & Digital Head</p>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <img src="https://www.infabio.com/team/vanshika.webp" alt="Vanshika" />
+                <div class="team-info">
+                    <h3>Vanshika</h3>
+                    <p>Co-Founder & Design Head</p>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <img src="https://www.infabio.com/team/Alinkrita.webp" alt="Alinkrita" />
+                <div class="team-info">
+                    <h3>Alinkrita</h3>
+                    <p>Chief Happiness Officer</p>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <img src="https://www.infabio.com/team/Sia-Singh.webp" alt="Sia Singh" />
+                <div class="team-info">
+                    <h3>Sia Singh</h3>
+                    <p>Social Media Manager</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container gs-fade">
+            <h2>Ready to build your <span class="text-gradient">growth engine?</span></h2>
+            <button class="btn btn-primary interactive" style="font-size: 1.25rem; padding: 1.5rem 3rem;"
+                onclick="openModal()">Book Free Strategy Call</button>
+        </div>
+    </section>
+
+    <footer class="bg-[#030508] text-white pt-24 pb-8 relative overflow-hidden text-left" role="contentinfo">
+        <div
+            class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-[#6366f1] via-[#fda4af] to-[#6366f1] shadow-[0_1px_15px_rgba(99,102,241,0.25)]">
+        </div>
+        <div
+            class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] rounded-full bg-indigo-950/10 blur-[130px] pointer-events-none">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 right-0 h-[100px] bg-gradient-to-t from-indigo-500/8 via-pink-500/4 to-transparent blur-[35px] pointer-events-none z-0">
+        </div>
+        <div class="container mx-auto relative z-10 px-6">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
+                <div class="md:col-span-3 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <div class="relative px-1 py-1">
+                            <div
+                                class="absolute -inset-x-4 -inset-y-3 bg-gradient-to-r from-indigo-500/20 via-purple-500/10 to-pink-400/20 blur-xl opacity-75 pointer-events-none">
+                            </div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-indigo-300/5 blur-md opacity-60 pointer-events-none">
+                            </div><img src="https://www.infabio.com/infabio-logo-dark.webp" alt="Infabio"
+                                style="height: 96px; margin-bottom: 1.5rem;">
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed max-w-sm font-sans font-light">AI-powered marketing
+                        defense system protecting brands from budget waste and maximizing ROI across three continents.
+                    </p>
+                    <div class="pt-2">
+                        <p class="text-sm text-slate-400 font-sans">A<!-- --> <a href="https://fabulousmedia.in/"
+                                target="_blank" rel="noopener noreferrer"
+                                class="font-semibold text-pink-400 hover:text-pink-300 transition-colors">Fabulous
+                                Media</a> <!-- -->network company</p>
+                    </div>
+                    <div class="flex gap-3 pt-2"><a href="https://www.linkedin.com/company/infabio/" target="_blank"
+                            rel="noopener noreferrer"
+                            class="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-slate-400 hover:bg-[#6366f1] hover:border-[#6366f1] hover:text-white transition-all duration-300 hover:shadow-[0_0_15px_rgba(99,102,241,0.3)]"
+                            aria-label="linkedin" tabindex="0"><svg class="w-4 h-4" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z">
+                                </path>
+                            </svg></a><a href="https://www.facebook.com/theinfabio" target="_blank"
+                            rel="noopener noreferrer"
+                            class="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-slate-400 hover:bg-[#6366f1] hover:border-[#6366f1] hover:text-white transition-all duration-300 hover:shadow-[0_0_15px_rgba(99,102,241,0.3)]"
+                            aria-label="facebook" tabindex="0"><svg class="w-4 h-4" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.84c0-2.52 1.49-3.91 3.77-3.91 1.09 0 2.23.2 2.23.2v2.46h-1.25c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34V22C18.34 21.24 22 17.08 22 12.06z">
+                                </path>
+                            </svg></a><a href="https://www.instagram.com/theinfabio" target="_blank"
+                            rel="noopener noreferrer"
+                            class="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-slate-400 hover:bg-[#6366f1] hover:border-[#6366f1] hover:text-white transition-all duration-300 hover:shadow-[0_0_15px_rgba(99,102,241,0.3)]"
+                            aria-label="instagram" tabindex="0"><svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg></a><a href="mailto:hello@infabio.com"
+                            class="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-slate-400 hover:bg-[#6366f1] hover:border-[#6366f1] hover:text-white transition-all duration-300 hover:shadow-[0_0_15px_rgba(99,102,241,0.3)]"
+                            aria-label="gmail" tabindex="0"><svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <path d="M4 6h16a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z"></path>
+                                <path d="M22 8l-10 6L2 8"></path>
+                            </svg></a></div>
+                </div>
+                <div class="md:col-span-3">
+                    <h4
+                        class="font-display font-light text-white mb-6 text-xs uppercase tracking-widest text-slate-400">
+                        Services</h4>
+                    <ul class="space-y-4 font-sans font-light">
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/services/performance-marketing"
+                                data-discover="true">AI-Powered Performance Marketing<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#6366f1] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/services/seo-organic-growth" data-discover="true">SEO
+                                &amp; Organic Growth<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#6366f1] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/services/branding-positioning"
+                                data-discover="true">Branding &amp; Positioning<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#6366f1] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/services/website-design-conversion"
+                                data-discover="true">Website Design &amp; Conversion<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#6366f1] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/services/ai-automation" data-discover="true">AI Automation
+                                Systems<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#6366f1] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/services/social-media-strategy"
+                                data-discover="true">Social Media Strategy<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#6366f1] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/services/funnel-lead-generation"
+                                data-discover="true">Funnel &amp; Lead Generation<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#6366f1] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:col-span-3">
+                    <h4
+                        class="font-display font-light text-white mb-6 text-xs uppercase tracking-widest text-slate-400">
+                        Industries</h4>
+                    <ul class="space-y-4 font-sans font-light">
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/industries/startups" data-discover="true">Startups<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#fda4af] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/industries/d2c-brands" data-discover="true">D2C
+                                Brands<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#fda4af] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/industries/coaches-creators" data-discover="true">Coaches
+                                &amp; Creators<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#fda4af] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/industries/clinics-wellness" data-discover="true">Clinics
+                                &amp; Wellness<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#fda4af] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/industries/fashion-beauty" data-discover="true">Fashion
+                                &amp; Beauty<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#fda4af] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/industries/saas" data-discover="true">SaaS Companies<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#fda4af] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/industries/local-businesses" data-discover="true">Local
+                                Businesses<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#fda4af] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                        <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                href="https://www.infabio.com/industries/women-led-businesses"
+                                data-discover="true">Women-Led Businesses<span
+                                    class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#fda4af] transition-all duration-300 group-hover:w-full"></span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:col-span-3 space-y-8">
+                    <div>
+                        <h4
+                            class="font-display font-light text-white mb-6 text-xs uppercase tracking-widest text-slate-400">
+                            Company</h4>
+                        <ul class="space-y-4 font-sans font-light">
+                            <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                    href="https://www.infabio.com/about" data-discover="true">About Us<span
+                                        class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#6366f1] transition-all duration-300 group-hover:w-full"></span></a>
+                            </li>
+                            <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                    href="https://www.infabio.com/services" data-discover="true">Services<span
+                                        class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#6366f1] transition-all duration-300 group-hover:w-full"></span></a>
+                            </li>
+                            <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                    href="https://www.infabio.com/industries" data-discover="true">Industries<span
+                                        class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#6366f1] transition-all duration-300 group-hover:w-full"></span></a>
+                            </li>
+                            <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                    href="https://www.infabio.com/insights" data-discover="true">Insights<span
+                                        class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#6366f1] transition-all duration-300 group-hover:w-full"></span></a>
+                            </li>
+                            <li><a class="text-sm text-slate-400 hover:text-white transition-colors relative group py-1 inline-block"
+                                    href="https://www.infabio.com/contact" data-discover="true">Contact<span
+                                        class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#6366f1] transition-all duration-300 group-hover:w-full"></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4
+                            class="font-display font-light text-white mb-5 text-xs uppercase tracking-widest text-slate-400">
+                            Global Presence</h4>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 flex-shrink-0 mt-0.5"
+                                    style="color:#6366f1" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                    </path>
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                <div>
+                                    <p class="text-sm font-sans font-medium text-slate-300">Gurugram, India</p>
+                                    <p class="text-xs text-slate-500 font-sans font-light">Defense Command Center</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3"><svg class="w-5 h-5 flex-shrink-0 mt-0.5"
+                                    style="color:#fda4af" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                    </path>
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                <div>
+                                    <p class="text-sm font-sans font-medium text-slate-300">Jaipur, India</p>
+                                    <p class="text-xs text-slate-500 font-sans font-light">Creative Division</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2 text-slate-400"></div>
+                <p class="text-xs text-slate-500 font-sans font-light">© 2026 Marketing Defense. All rights reserved.
+                </p>
+                <div class="flex gap-6 text-xs text-slate-500 font-sans font-light"><a href="#"
+                        class="hover:text-white transition-colors relative group">Privacy Policy<span
+                            class="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span></a><a
+                        href="#" class="hover:text-white transition-colors relative group">Terms of Service<span
+                            class="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span></a><a
+                        href="#" class="hover:text-white transition-colors relative group">Cookie Policy<span
+                            class="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="mt-8 flex justify-end container mx-auto pb-4 px-6 relative z-10">
+            <div
+                class="inline-flex items-center gap-3 rounded-2xl border border-white/5 bg-[#050713]/40 backdrop-blur-xl px-4 py-3 transition-all duration-300 hover:bg-white/[0.05] hover:border-white/20 shadow-[0_4px_25px_rgba(0,0,0,0.3)]">
+                <a href="https://fabulousmedia.in/" target="_blank" rel="noopener noreferrer"
+                    class="opacity-85 hover:opacity-100 transition-opacity flex items-center"
+                    aria-label="FabulousMedia"><img src="https://www.infabio.com/fabulous-logo.webp" alt="FabulousMedia"
+                        class="h-3 w-auto object-contain" /></a><span class="h-3 w-px bg-white/20"></span><a
+                    href="https://gocommercially.com/" target="_blank" rel="noopener noreferrer"
+                    class="opacity-85 hover:opacity-100 transition-opacity flex items-center"
+                    aria-label="GoCommercially"><img src="https://www.infabio.com/gocommercially-logo.webp"
+                        alt="GoCommercially" class="h-3 w-auto object-contain" /></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        const interactives = document.querySelectorAll('.interactive, button, a');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+        });
+
+        interactives.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
+        // Background Starry Canvas
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 1.5;
+                this.speedY = Math.random() * 0.2 + 0.1;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < 0) {
+                    this.y = height;
+                    this.x = Math.random() * width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 150; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        // Lightning / Flash effect on scroll
+        const lightning = document.querySelector('.lightning-overlay');
+        let lastScrollTop = 0;
+
+        window.addEventListener('scroll', () => {
+            const st = window.pageYOffset || document.documentElement.scrollTop;
+            if (Math.abs(st - lastScrollTop) > 50) {
+                gsap.to(lightning, { opacity: 0.3, duration: 0.1, yoyo: true, repeat: 1 });
+                lastScrollTop = st;
+            }
+        });
+
+
+        // Number Counters
+        const stats = document.querySelectorAll('.stat-number');
+        stats.forEach(stat => {
+            const target = parseFloat(stat.getAttribute('data-target'));
+            const isFloat = stat.getAttribute('data-target').includes('.');
+            const suffix = stat.getAttribute('data-suffix') || '';
+
+            gsap.to({ val: 0 }, {
+                val: target,
+                duration: 2.5,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: stat,
+                    start: "top 85%"
+                },
+                onUpdate: function () {
+                    const current = isFloat ? this.targets()[0].val.toFixed(1) : Math.floor(this.targets()[0].val);
+                    stat.innerHTML = current + suffix;
+                }
+            });
+        });
+
+
+        // Simple Vertical Fades
+        const fadeElements = document.querySelectorAll('.gs-fade');
+        fadeElements.forEach(el => {
+            gsap.fromTo(el,
+                { y: 60, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.2,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                    }
+                }
+            );
+        });
+
+        // Diagnostic Quiz Logic
+        const quizData = [
+            {
+                step: "01",
+                title: "Business Foundation",
+                desc: "Where is your business right now?",
+                options: ["Just getting started", "Finding product-market fit", "Growing consistently", "Scaling aggressively"]
+            },
+            {
+                step: "02",
+                title: "Primary Bottleneck",
+                desc: "What is holding back your growth the most?",
+                options: ["Lead Volume", "Lead Quality", "High Ad Costs", "Low Conversion Rate"]
+            },
+            {
+                step: "03",
+                title: "Current Ad Spend",
+                desc: "What is your average monthly ad spend?",
+                options: ["$0 - $5k", "$5k - $20k", "$20k - $100k", "$100k+"]
+            },
+            {
+                step: "04",
+                title: "Sales Process",
+                desc: "How do you currently close deals?",
+                options: ["Fully Automated / E-com", "Sales Team / Calls", "Founder-led Sales", "Referrals only"]
+            },
+            {
+                step: "05",
+                title: "Customer LTV",
+                desc: "What is the lifetime value of a customer?",
+                options: ["Under $100", "$100 - $500", "$500 - $2k", "Over $2k"]
+            },
+            {
+                step: "06",
+                title: "Content Strategy",
+                desc: "How would you rate your current brand content?",
+                options: ["Non-existent", "Basic", "Consistent but low ROI", "High converting"]
+            },
+            {
+                step: "07",
+                title: "Growth Goal",
+                desc: "What is your primary objective for the next 6 months?",
+                options: ["Double Revenue", "Decrease CPA", "Launch new product", "Prepare for exit"]
+            }
+        ];
+
+        let currentStep = 0;
+        let selectedOption = null;
+        const quizContainer = document.getElementById('quiz-container');
+
+
+        function renderStep() {
+            gsap.to(quizContainer, {
+                opacity: 0, y: -20, duration: 0.3, onComplete: () => {
+
+                    if (currentStep < quizData.length) {
+                        const data = quizData[currentStep];
+                        const progressPercent = ((currentStep) / quizData.length) * 100;
+
+                        const letters = ['A', 'B', 'C', 'D', 'E'];
+                        let optionsHtml = data.options.map((opt, i) =>
+                            `<button class="option-btn interactive" onclick="selectOption(${i})">
+                            <span class="option-letter">${letters[i]}</span>
+                            <span class="option-text">${opt}</span>
+                        </button>`
+                        ).join('');
+
+                        quizContainer.innerHTML = `
+                        <div class="quiz-content">
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: ${progressPercent}%"></div>
+                            </div>
+                            <div class="step-indicator">Step 0${currentStep + 1} / 07</div>
+                            <h2 style="font-size: 2.5rem; margin-bottom: 0.5rem; line-height: 1.2;">${data.title}</h2>
+                            <p style="font-size: 1.25rem; color: var(--text-muted); margin-bottom: 3rem;">${data.desc}</p>
+                            
+                            <div class="options-grid">
+                                ${optionsHtml}
+                            </div>
+                            
+                            <button class="btn btn-primary interactive" style="margin-top: 3rem; width: 100%; opacity: 0.3; cursor: not-allowed; transition: all 0.3s;" id="continue-btn" onclick="nextStep()">Continue →</button>
+                        </div>
+                    `;
+                    } else {
+                        quizContainer.innerHTML = `
+                        <div class="quiz-content" style="text-align: center;">
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: 100%"></div>
+                            </div>
+                            <div class="pill-badge" style="margin: 0 auto 2rem;">DIAGNOSTIC COMPLETE</div>
+                            <h2 style="font-size: 3rem; margin-bottom: 1rem; line-height: 1.1;">Your custom growth<br><span class="text-gradient">blueprint is ready.</span></h2>
+                            <p style="font-size: 1.125rem; color: var(--text-muted); margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">Enter your details below to see exactly where you are losing revenue and how to fix it.</p>
+                            
+                            <form onsubmit="event.preventDefault(); alert('Redirecting to your blueprint...');" style="max-width: 500px; margin: 0 auto;">
+                                <input type="text" class="diag-input interactive" placeholder="First Name" required>
+                                <input type="email" class="diag-input interactive" placeholder="Work Email" required>
+                                <input type="text" class="diag-input interactive" placeholder="Website URL" required>
+                                <button type="submit" class="btn btn-primary interactive" style="margin-top: 1rem; width: 100%; font-size: 1.125rem; padding: 1.25rem;">Get My Custom Blueprint</button>
+                            </form>
+                        </div>
+                    `;
+                    }
+
+                    selectedOption = null;
+                    gsap.fromTo(quizContainer,
+                        { opacity: 0, y: 20 },
+                        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+                    );
+
+                    document.querySelectorAll('.interactive').forEach(el => {
+                        el.addEventListener('mouseenter', () => document.querySelector('.cursor').classList.add('hovered'));
+                        el.addEventListener('mouseleave', () => document.querySelector('.cursor').classList.remove('hovered'));
+                    });
+                }
+            });
+        }
+
+
+        window.selectOption = function (index) {
+            selectedOption = index;
+            const btns = quizContainer.querySelectorAll('.option-btn');
+            btns.forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+            const continueBtn = document.getElementById('continue-btn');
+            if (continueBtn) {
+                continueBtn.style.opacity = '1';
+                continueBtn.style.cursor = 'none'; // custom cursor
+            }
+        };
+
+        window.nextStep = function () {
+            if (selectedOption !== null) {
+                currentStep++;
+                renderStep();
+            }
+        };
+
+
+        // 3D Tilt Effect
+        const tiltCards = document.querySelectorAll('.tilt-card');
+
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; // x position within the element.
+                const y = e.clientY - rect.top;  // y position within the element.
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * -10; // Max rotation 10deg
+                const rotateY = ((x - centerX) / centerX) * 10;
+
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+                card.style.transition = 'transform 0.5s ease';
+                setTimeout(() => {
+                    card.style.transition = 'transform 0.1s';
+                }, 500);
+            });
+        });
+
+
+        // Initialize quiz
+        renderStep();
+
+        // Modal Logic
+        function openModal() {
+            document.getElementById('strategy-modal').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            document.getElementById('strategy-modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    </script>
+</body>
+
+</html>
